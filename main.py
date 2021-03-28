@@ -8,8 +8,9 @@ from spirecomm.spire.character import PlayerClass
 
 
 if __name__ == "__main__":
+    log = 'spirecomm_log.txt'
     agent = SimpleAgent()
-    coordinator = Coordinator()
+    coordinator = Coordinator(log)
     coordinator.signal_ready()
     coordinator.register_command_error_callback(agent.handle_error)
     coordinator.register_state_change_callback(agent.get_next_action_in_game)

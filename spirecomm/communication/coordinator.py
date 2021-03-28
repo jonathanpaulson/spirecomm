@@ -3,6 +3,7 @@ import queue
 import threading
 import json
 import collections
+import datetime
 
 from spirecomm.spire.game import Game
 from spirecomm.spire.screen import ScreenType
@@ -42,7 +43,7 @@ def write_stdout(output_queue):
 class Coordinator:
     """An object to coordinate communication with Slay the Spire"""
 
-    def __init__(self):
+    def __init__(self, log_path):
         self.input_queue = queue.Queue()
         self.output_queue = queue.Queue()
         self.input_thread = threading.Thread(target=read_stdin, args=(self.input_queue,))
@@ -60,6 +61,7 @@ class Coordinator:
         self.in_game = False
         self.last_game_state = None
         self.last_error = None
+        self.log = open(log_path, 'w')
 
     def signal_ready(self):
         """Indicate to Communication Mod that setup is complete
@@ -67,7 +69,7 @@ class Coordinator:
         Must be used once, before any other commands can be sent.
         :return: None
         """
-        self.send_message("ready")
+        self.send_message("Ready")
 
     def send_message(self, message):
         """Send a command to Communication Mod and start waiting for a response
@@ -78,6 +80,7 @@ class Coordinator:
         """
         self.output_queue.put(message)
         self.game_is_ready = False
+        print(f'{str(datetime.datetime.now())}: {message}', end='\n', flush=True, file=self.log)
 
     def add_action_to_queue(self, action):
         """Queue an action to perform when ready
