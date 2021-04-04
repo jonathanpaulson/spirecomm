@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+message Cards {
+  int32 strike_count = 1;
+  int32 defend_count = 1;
+  // ...
+}
+message Potions {
+  int32 fire_count = 1;
+  // ...
+}
+message Relics {
+  bool vajra = 1;
+  // ...
+}
+
+message Status {
+  int32 poison = 1;
+  // ...
+}
+
+message Intent {
+  int32 move_id = 1;
+  int32 damage = 2;
+  int32 nhits = 3;
+}
+
+message Monster {
+  int32 id = 1;
+  int32 current_hp = 2;
+  int32 max_hp = 3;
+  Intent intent = 4;
+  int32 block  = 5;
+  Status status = 6;
+}
+
+message PlayerCombat {
+  int32 energy = 1;
+  int32 block = 2;
+  Cards discard = 5;
+  Cards hand = 3;
+  Cards deck = 4;
+  Status status = 5;
+  // orbs? part of status?
+}
+
+
+message Combat {
+  PlayerCombat player = 1;
+  repeated Monster monster = 2;
+}
+
+message Game {
+  int32 current_hp = 1;
+  int32 max_hp = 2;
+  int32 gold = 3;
+  int32 floor = 4;
+  Potions potions = 5;
+  Relics relics = 6;
+  Cards deck = 7;
+  // TODO map class ascension_level floor
+}
+
+message Input {
+  Game game = 1;
+  Combat combat = 2;
+}
+
+message Output {
+  // Play a card, or drink a potion, or click end turn
+  bool play_strike = 1;
+  // ...
+  bool drink_strength = 100;
+  // ...
+  bool end_turn = 200;
+  // TODO What about card rewards? What about event choices? What about whale bonus?
+}
