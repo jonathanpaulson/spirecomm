@@ -2,7 +2,7 @@ syntax = "proto3";
 
 message Cards {
   int32 strike_count = 1;
-  int32 defend_count = 1;
+  int32 defend_count = 2;
   // ...
 }
 message Potions {
@@ -37,11 +37,11 @@ message Monster {
 message PlayerCombat {
   int32 energy = 1;
   int32 block = 2;
-  Cards discard = 5;
-  Cards hand = 3;
-  Cards deck = 4;
-  Status status = 5;
-  // orbs? part of status?
+  Cards discard = 3;
+  Cards hand = 4;
+  Cards deck = 5;
+  Status status = 6;
+  // TODO orbs? part of status?
 }
 
 
